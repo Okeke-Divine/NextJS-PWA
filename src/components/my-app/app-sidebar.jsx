@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { ListTodo, Plus, Home, User, CreditCard, LogOut } from "lucide-react"
+import { ListTodo, Plus, Home, User, CreditCard, LogOut,ChevronUp  } from "lucide-react"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@radix-ui/react-dropdown-menu';
 
 import {
   Sidebar,
