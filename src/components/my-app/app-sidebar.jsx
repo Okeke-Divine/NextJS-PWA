@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ListTodo, Plus } from "lucide-react"
+import { ListTodo, Plus, Home, User, CreditCard, LogOut } from "lucide-react"
 
 import {
   Sidebar,
@@ -11,15 +11,37 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarGroupAction,
+  SidebarFooter
 } from "@/components/ui/sidebar"
 
 // Menu items.
 const items = [
   {
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: Home,
+  }, {
     title: "Todos",
     url: "/todo",
     icon: ListTodo,
-  }
+  },
+]
+
+const footer_items = [
+  {
+    title: "Account",
+    url: "/account",
+    icon: User, // User icon for account
+  }, {
+    title: "Billing",
+    url: "/billing",
+    icon: CreditCard, // CreditCard icon for billing
+  },
+  {
+    title: "Sign Out",
+    url: "/sign-out",
+    icon: LogOut, // LogOut icon for sign out
+  },
 ]
 
 export function AppSidebar() {
@@ -50,6 +72,34 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      {/* FOOTER */}
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <SidebarMenuButton>
+                  <User /> Username
+                  <ChevronUp className="ml-auto" />
+                </SidebarMenuButton>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                side="top"
+                className="w-[--radix-popper-anchor-width]"
+              >
+                {footer_items.map((item) => (
+                  <DropdownMenuItem key={item.title}>
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 }
