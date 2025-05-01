@@ -19,7 +19,7 @@ export default function PageLayout({ children, title }) {
             <header className="relative flex h-16 items-center justify-between border-b px-4">
 
                 {/* LEFT */}
-                <div className="flex h-16 items-center justify-between gap-2 border-b">
+                <div className="flex h-16 items-center justify-between gap-2">
                     <SidebarTrigger className="-ml-1" />
                     <Separator orientation="vertical" className="h-4 mr-2" />
 

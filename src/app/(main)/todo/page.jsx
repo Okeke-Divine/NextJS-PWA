@@ -93,7 +93,7 @@ export default function Todo() {
                   onConfirm={() => handleDelete(id)}
                   trigger={
                     <Button variant="ghost" size="icon">
-                      <Trash className="h-4 w-4 text-destructive" />
+                      <Trash className="h-4 w-4" />
                     </Button>
                   }
                 />
