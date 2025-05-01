@@ -1,6 +1,18 @@
 "use client"
-import PageLayout from "@/components/shared/page-layout";
+
 import { useState, useRef, useEffect } from "react"
+import PageLayout from "@/components/shared/page-layout"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+import { Trash } from "lucide-react"
 
 export default function Todo() {
   const [tasks, setTasks] = useState([])
@@ -49,36 +61,41 @@ export default function Todo() {
   }
 
   return (
-    <>
-      <PageLayout title="Todo">
-        <div className="px-10 py-16">
-          <form className="form-control flex gap-2" onSubmit={handleSubmit}>
-            <input
-              ref={inputRef}
-              type="text"
-              className="input border p-2 rounded"
-              placeholder="Add new task"
-            />
-            <button type="submit" className="btn bg-blue-500 text-white px-4 py-2 rounded">
-              Add
-            </button>
-          </form>
+    <PageLayout title="Todo">
+      <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
+        <Input
+          ref={inputRef}
+          type="text"
+          placeholder="Add new task"
+          className="flex-1"
+        />
+        <Button type="submit">Add</Button>
+      </form>
 
-          <ul className="mt-8 space-y-4">
-            {tasks.map(({ id, task }) => (
-              <li key={id} className="flex justify-between items-center border-b pb-2">
-                <span>{task}</span>
-                <button
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-full uppercase font-semibold">Task</TableHead>
+            <TableHead className="w-10 text-right uppercase font-semibold">Delete</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {tasks.map(({ id, task }) => (
+            <TableRow key={id}>
+              <TableCell>{task}</TableCell>
+              <TableCell className="text-right">
+                <Button
+                  variant="ghost"
+                  size="icon"
                   onClick={() => handleDelete(id)}
-                  className="btn bg-red-500 text-white px-4 py-1 rounded ml-4"
                 >
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </PageLayout>
-    </>
+                  <Trash className="h-4 w-4 text-destructive" />
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </PageLayout>
   )
 }
