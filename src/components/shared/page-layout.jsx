@@ -1,27 +1,51 @@
-import { Separator } from "@/components/ui/separator";
-import { SidebarInset, SidebarTrigger } from "@/components/ui/sidebar";
-import ThemeModeToggle from "@/components/shared/theme-modal-toggle.jsx";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+    SidebarInset,
+    SidebarTrigger,
+} from "@/components/ui/sidebar"
+import { ThemeModeToggle } from "@/components/shared/theme-modal-toggle.jsx";
 
 export default function PageLayout({ children, title }) {
-  return (
-    <SidebarInset>
-      <header className="flex h-16 shrink-0 items-center gap-2 px-4">
-        <SidebarTrigger className="-ml-1" />
-        <ThemeModeToggle />
-        <Separator orientation="vertical" className="mr-2 h-4" />
-        {title && <h1 className="text-lg font-medium">{title}</h1>}
-      </header>
+    return (
+        <SidebarInset>
+            <header className="relative flex h-16 items-center justify-between border-b px-4">
 
-      <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-        <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-          <div className="aspect-video rounded-xl bg-muted/50" />
-          <div className="aspect-video rounded-xl bg-muted/50" />
-          <div className="aspect-video rounded-xl bg-muted/50" />
-        </div>
-        <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-      </div>
+                {/* LEFT */}
+                <div className="flex h-16 items-center justify-between gap-2 border-b">
+                    <SidebarTrigger className="-ml-1" />
+                    <Separator orientation="vertical" className="h-4 mr-2" />
 
-      {children}
-    </SidebarInset>
-  );
+
+                    <div className="">
+                        {title &&
+                            <Breadcrumb>
+                                <BreadcrumbList>
+                                    <BreadcrumbItem>
+                                        <BreadcrumbPage className="font-semibold">{title}</BreadcrumbPage>
+                                    </BreadcrumbItem>
+                                </BreadcrumbList>
+                            </Breadcrumb>
+                        }
+                    </div>
+                </div>
+
+                {/* RIGHT */}
+                <div className="flex items-center gap-2">
+                    <ThemeModeToggle />
+                </div>
+            </header>
+
+            <div className="p-4">
+                {children}
+            </div>
+        </SidebarInset>
+    );
 }

@@ -1,5 +1,5 @@
 "use client"
-import { Button } from "@/components/ui/button"
+import PageLayout from "@/components/shared/page-layout";
 import { useState, useRef, useEffect } from "react"
 
 export default function Todo() {
@@ -50,33 +50,35 @@ export default function Todo() {
 
   return (
     <>
-      <div className="px-10 py-16">
-        <form className="form-control flex gap-2" onSubmit={handleSubmit}>
-          <input
-            ref={inputRef}
-            type="text"
-            className="input border p-2 rounded"
-            placeholder="Add new task"
-          />
-          <button type="submit" className="btn bg-blue-500 text-white px-4 py-2 rounded">
-            Add
-          </button>
-        </form>
+      <PageLayout title="Todo">
+        <div className="px-10 py-16">
+          <form className="form-control flex gap-2" onSubmit={handleSubmit}>
+            <input
+              ref={inputRef}
+              type="text"
+              className="input border p-2 rounded"
+              placeholder="Add new task"
+            />
+            <button type="submit" className="btn bg-blue-500 text-white px-4 py-2 rounded">
+              Add
+            </button>
+          </form>
 
-        <ul className="mt-8 space-y-4">
-          {tasks.map(({ id, task }) => (
-            <li key={id} className="flex justify-between items-center border-b pb-2">
-              <span>{task}</span>
-              <button
-                onClick={() => handleDelete(id)}
-                className="btn bg-red-500 text-white px-4 py-1 rounded ml-4"
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+          <ul className="mt-8 space-y-4">
+            {tasks.map(({ id, task }) => (
+              <li key={id} className="flex justify-between items-center border-b pb-2">
+                <span>{task}</span>
+                <button
+                  onClick={() => handleDelete(id)}
+                  className="btn bg-red-500 text-white px-4 py-1 rounded ml-4"
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </PageLayout>
     </>
   )
 }
