@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Trash } from "lucide-react"
+import ConfirmDialog from "@/components/my-app/confirm-dialogue"
 
 export default function Todo() {
   const [tasks, setTasks] = useState([])
@@ -75,8 +76,8 @@ export default function Todo() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-full uppercase font-semibold">Task</TableHead>
-            <TableHead className="w-10 text-right uppercase font-semibold">Delete</TableHead>
+            <TableHead className="w-full font-semibold">Task</TableHead>
+            <TableHead className="w-10 text-right font-semibold">[Action]</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -84,13 +85,18 @@ export default function Todo() {
             <TableRow key={id}>
               <TableCell>{task}</TableCell>
               <TableCell className="text-right">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => handleDelete(id)}
-                >
-                  <Trash className="h-4 w-4 text-destructive" />
-                </Button>
+                <ConfirmDialog
+                  title="Delete Task"
+                  description={`Are you sure you want to delete "${task}"?`}
+                  confirmText="Delete"
+                  cancelText="Cancel"
+                  onConfirm={() => handleDelete(id)}
+                  trigger={
+                    <Button variant="ghost" size="icon">
+                      <Trash className="h-4 w-4 text-destructive" />
+                    </Button>
+                  }
+                />
               </TableCell>
             </TableRow>
           ))}
