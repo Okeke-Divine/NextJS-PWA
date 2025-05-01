@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ListTodo, Home } from "lucide-react"
+import { ListTodo, Plus } from "lucide-react"
 
 import {
   Sidebar,
@@ -10,15 +10,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarGroupAction,
 } from "@/components/ui/sidebar"
 
 // Menu items.
 const items = [
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: Home,
-  },
   {
     title: "Todos",
     url: "/todo",
@@ -32,6 +28,12 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <Link href="/todo?action=create">
+            <SidebarGroupAction title="Add Project">
+              <Plus />
+              <span className="sr-only">New Todo</span>
+            </SidebarGroupAction>
+          </Link>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (

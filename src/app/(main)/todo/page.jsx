@@ -104,7 +104,7 @@ export default function Todo() {
                       isLoading={loadingDeleteId === id}
                       variant="ghost"
                       size="icon"
-                      icon={<Trash className="h-4 w-4 text-destructive" />}
+                      icon={<Trash className="h-4 w-4" />}
                     />
                   }
                 />
