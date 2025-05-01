@@ -3,7 +3,6 @@
 import { useState, useRef, useEffect } from "react"
 import PageLayout from "@/components/shared/page-layout"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -12,14 +11,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Trash } from "lucide-react"
 import ConfirmDialog from "@/components/my-app/confirm-dialogue"
+import SubmitButton from "@/components/my-app/submit-button"
+import { Trash } from "lucide-react"
 
 export default function Todo() {
   const [tasks, setTasks] = useState([])
+  const [loadingAdd, setLoadingAdd] = useState(false)
+  const [loadingDeleteId, setLoadingDeleteId] = useState(null)
   const inputRef = useRef(null)
 
-  // Fetch tasks on mount
+  // Fetch tasks
   useEffect(() => {
     fetch(`/api/task/all`)
       .then((res) => res.json())
@@ -33,6 +35,7 @@ export default function Todo() {
     const value = inputRef.current?.value.trim()
     if (!value) return
 
+    setLoadingAdd(true)
     const res = await fetch("/api/task", {
       method: "POST",
       body: JSON.stringify({ task: value }),
@@ -45,10 +48,13 @@ export default function Todo() {
     } else {
       console.error("Task creation failed")
     }
+    setLoadingAdd(false)
   }
 
   // Delete task
   const handleDelete = async (id) => {
+    setLoadingDeleteId(id)
+
     const res = await fetch("/api/task/delete", {
       method: "DELETE",
       body: JSON.stringify({ id }),
@@ -59,6 +65,8 @@ export default function Todo() {
     } else {
       console.error("Failed to delete task")
     }
+
+    setLoadingDeleteId(null)
   }
 
   return (
@@ -70,7 +78,7 @@ export default function Todo() {
           placeholder="Add new task"
           className="flex-1"
         />
-        <Button type="submit">Add</Button>
+        <SubmitButton isLoading={loadingAdd}>Add</SubmitButton>
       </form>
 
       <Table>
@@ -92,9 +100,12 @@ export default function Todo() {
                   cancelText="Cancel"
                   onConfirm={() => handleDelete(id)}
                   trigger={
-                    <Button variant="ghost" size="icon">
-                      <Trash className="h-4 w-4" />
-                    </Button>
+                    <SubmitButton
+                      isLoading={loadingDeleteId === id}
+                      variant="ghost"
+                      size="icon"
+                      icon={<Trash className="h-4 w-4 text-destructive" />}
+                    />
                   }
                 />
               </TableCell>
