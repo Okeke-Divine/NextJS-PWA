@@ -8,29 +8,40 @@ export default function PWAInstaller() {
   const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isIos, setIsIos] = useState(false);
   const [showIosModal, setShowIosModal] = useState(false);
+  const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {
     const userAgent = window.navigator.userAgent.toLowerCase();
     setIsIos(/iphone|ipad|ipod/.test(userAgent));
-
+  
+    // Check if app is running in standalone
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+   setIsInstalled(isStandalone);
+  
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
       setDeferredPrompt(e);
     };
-
+  
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
+  
+    window.addEventListener('appinstalled', () => {
+      console.log('App was installed');
+      setIsInstalled(true);
+    });
+  
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
         .register('/sw.js')
         .then((reg) => console.log('SW registered', reg))
         .catch((err) => console.error('SW registration failed:', err));
     }
-
+  
     return () => {
       window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
     };
   }, []);
+  
 
   const handleInstallClick = async () => {
     if (isIos) {
@@ -50,7 +61,7 @@ export default function PWAInstaller() {
 
   return (
     <>
-      <InstallPromptButton onClick={handleInstallClick} />
+      {!isInstalled && <InstallPromptButton onClick={handleInstallClick} />}
       {showIosModal && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-xl max-w-md text-center">
@@ -69,4 +80,5 @@ export default function PWAInstaller() {
       )}
     </>
   );
+  
 }
