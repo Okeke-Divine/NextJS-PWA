@@ -1,7 +1,7 @@
 {
-    "name": "Todo Apl",
-    "short_name": "TAPL",
-    "description": "best todo apl in the world",
+    "name": "Nextjs PWA",
+    "short_name": "NPWA",
+    "description": "best pwa app in the world",
     "theme_color": "#03a9f4",
     "background_color": "#ffffff",
     "display": "standalone",
