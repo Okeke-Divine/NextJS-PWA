@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import InstallPromptButton from './install-prompt-button.jsx'; // Your custom ShadCN button
 
 export default function PWAInstaller() {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
   const [isIos, setIsIos] = useState(false);
   const [showIosModal, setShowIosModal] = useState(false);
 
